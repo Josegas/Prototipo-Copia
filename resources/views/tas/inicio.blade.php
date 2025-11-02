@@ -12,7 +12,7 @@
                 <h1 class="display-4 fw-bold mb-3" style="color: #003865;">
                     Todos tus medicamentos, en un solo lugar
                 </h1>
-                <p class="lead text-muted mb-4">
+                <p class="lead text-muted mb-4 fs-4">
                     Te Acerco Salud (TAS) es una plataforma tecnológica completa que une a pacientes con farmacias de forma
                     eficiente, asegurando que sus recetas médicas estén siempre disponibles. Usando nuestra aplicación en
                     línea y móvil, los usuarios pueden elegir las sucursales, enviar sus recetas y obtener sus medicamentos
