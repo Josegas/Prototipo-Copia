@@ -9,12 +9,29 @@
 @section('body-class', 'login-page')
 
 @section('content')
-    <div class="login-container {{ request()->routeIs('register') ? 'active' : '' }}" id="container">
+    <div class="login-container {{ request()->routeIs('tas_registroView') ? 'active' : '' }}" id="container">
 
         <div class="form-container sign-up">
             <form method="POST" action="{{ route('tas_crearCuenta') }}">
                 @csrf
                 <h1>Crear Cuenta</h1>
+
+                @if(session('error') && request()->routeIs('tas_registroView'))
+                    <div class="alert alert-danger">
+                        <p>{{ session('error') }}</p>
+                    </div>
+                @endif
+
+                @if($errors->any() && request()->routeIs('tas_registroView'))
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
                 <input type="text" placeholder="Correo electrónico" name="correo" value="{{ old('correo') }}" required>
                 <input type="text" placeholder="Nombre" name="nombre" value="{{ old('nombre') }}" required>
                 <input type="text" placeholder="Apellido" name="apellido" value="{{ old('apellido') }}" required>
@@ -27,6 +44,29 @@
             <form method="POST" action="{{ route('tas_inicioSesion') }}">
                 @csrf
                 <h1>Iniciar Sesión</h1>
+
+                @if(session('success'))
+                    <div class="alert alert-success">
+                        <p>{{ session('success') }}</p>
+                    </div>
+                @endif
+
+                @if(session('error') && request()->routeIs('tas_loginView'))
+                    <div class="alert alert-danger">
+                        <p>{{ session('error') }}</p>
+                    </div>
+                @endif
+
+                @if($errors->any() && request()->routeIs('tas_loginView'))
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
                 <input type="text" placeholder="Correo electrónico" name="correo" value="{{ old('correo') }}" required>
                 <input type="password" placeholder="Contraseña" name="nip" required>
                 <a href="#">¿Olvidaste tu contraseña?</a>
