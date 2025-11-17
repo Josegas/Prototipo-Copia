@@ -240,7 +240,6 @@ body.login-page {
     transform: translateX(200%);
 }
 
-/* Responsive Design */
 @media (max-width: 991px) {
     body.login-page {
         padding: 100px 20px 30px;
@@ -473,4 +472,5 @@ body.login-page {
                 padding-left: 12px;
             }
         }
+        
 }

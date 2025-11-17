@@ -16,6 +16,8 @@ Route::get('/registro', [TasController::class, 'tas_registroView'])
 
 Route::post('/login', [TasController::class, 'tas_inicioSesion'])->name('tas_inicioSesion');
 Route::post('/registro', [TasController::class, 'tas_crearCuenta'])->name('tas_crearCuenta');
+Route::post('/registro/validar-cliente', [TasController::class, 'validarPasoCliente'])
+    ->name('tas.validarPasoCliente');
 
 Route::get('/subir-receta', [RecetaController::class, 'subirRecetaView'])
     ->middleware('verificar.sesion')

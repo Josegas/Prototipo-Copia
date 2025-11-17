@@ -1,0 +1,19 @@
+.card-number-wrapper {
+    display: flex !important;
+    align-items: center !important;
+    flex-direction: row !important;
+    gap: 8px !important;
+    width: 100%;
+}
+
+.card-logo-small {
+    width: 30px !important;
+    height: 20px !important;
+    object-fit: contain !important;
+    flex-shrink: 0 !important;
+}
+
+#cardBrand.d-none {
+    width: 0 !important;
+    height: 0 !important;
+}

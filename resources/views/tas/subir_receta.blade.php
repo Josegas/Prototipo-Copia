@@ -10,11 +10,11 @@
     <x-stepper :currentStep="1" />
 
     <div id="map-section" class="d-flex justify-content-center">
-        <x-mapa-farmacias />
+        <x-mapa_farmacias />
     </div>
 
     <div id="form-section" class="d-none justify-content-center">
-        <x-formulario-receta />
+        <x-formulario_receta />
     </div>
 </div>
 

@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;
 
-class formulario-receta extends Component
+class register_stepper extends Component
 {
     /**
      * Create a new component instance.
@@ -21,6 +21,6 @@ class formulario-receta extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.formulario-receta');
+        return view('components.register_stepper');
     }
 }

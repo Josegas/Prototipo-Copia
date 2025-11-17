@@ -1,5 +1,3 @@
-{{-- resources/views/components/mapa-farmacias.blade.php --}}
-
 <div class="card shadow-lg border-0 w-100 mapa-farmacias-card">
     <div class="card-header text-white text-center mapa-farmacias-header">
         <h4 class="mb-0">
@@ -21,6 +19,13 @@
                 <i class="fas fa-map me-1"></i>Fuente del mapa: OpenStreetMap (Leaflet.js)
             </small>
         </div>
+    </div>
+</div>
+
+    <div class="card-footer text-center formulario-receta-footer">
+        <span class="step-badge">
+            <i class="fas fa-check-circle me-2"></i>Paso 2 de 3
+        </span>
     </div>
 </div>
 
