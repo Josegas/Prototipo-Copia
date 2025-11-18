@@ -43,13 +43,10 @@ class TasController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+            return back()->withErrors($validator, 'login')->withInput();
         }
 
-        $correo = $request->correo;
-        $nip = $request->nip;
-
-        $usuario = $this->tasService->iniciarSesion($correo, $nip);
+        $usuario = $this->tasService->iniciarSesion($request->correo, $request->nip);
 
         if (! $usuario) {
             return back()->with('error', 'Ha ocurrido un error');
@@ -67,36 +64,16 @@ class TasController extends Controller
             ],
         ]);
 
-        return redirect()
-            ->route('tas_inicioView')
-            ->with('success', 'Bienvenido '.$usuario->getNombre());
+        return redirect()->route('tas_inicioView')->with('success', 'Bienvenido '.$usuario->getNombre());
     }
 
     private function validarDatosCliente(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'correo' => [
-                'required',
-                'string',
-                'regex:/^[\w\.-]+@[\w\.-]+\.\w{2,4}$/',
-            ],
-            'nip' => [
-                'required',
-                'string',
-                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/',
-            ],
-            'nombre' => [
-                'required',
-                'string',
-                'max:255',
-                'regex:/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/',
-            ],
-            'apellido' => [
-                'required',
-                'string',
-                'max:255',
-                'regex:/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/',
-            ],
+            'correo' => ['required', 'string', 'regex:/^[\w\.-]+@[\w\.-]+\.\w{2,4}$/'],
+            'nip' => ['required', 'string', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/'],
+            'nombre' => ['required', 'string', 'max:255', 'regex:/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/'],
+            'apellido' => ['required', 'string', 'max:255', 'regex:/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/'],
         ], [
             'correo.required' => 'El correo es obligatorio.',
             'correo.regex' => 'El correo no tiene un formato válido.',
@@ -114,27 +91,45 @@ class TasController extends Controller
     public function validarPasoCliente(Request $request)
     {
         $validacion = $this->validarDatosCliente($request);
+        if ($validacion === true) return response()->json(['ok' => true]);
 
-        if ($validacion === true) {
-            return response()->json(['ok' => true]);
-        }
+        return response()->json(['ok' => false, 'errores' => $validacion->all()]);
+    }
 
-        return response()->json([
-            'ok' => false,
-            'errores' => $validacion->all(),
-        ]);
+    private function agregarReglaLuhn()
+    {
+        Validator::extend('luhn', function ($attribute, $value) {
+            $number = preg_replace('/\D/', '', $value);
+            $sum = 0;
+            $alt = false;
+
+            for ($i = strlen($number) - 1; $i >= 0; $i--) {
+                $n = intval($number[$i]);
+                if ($alt) {
+                    $n *= 2;
+                    if ($n > 9) $n -= 9;
+                }
+                $sum += $n;
+                $alt = ! $alt;
+            }
+
+            return ($sum % 10) === 0;
+        });
     }
 
     private function validarDatosTarjeta(Request $request)
     {
+        $this->agregarReglaLuhn();
+
         $validator = Validator::make($request->all(), [
-            'numero_tarjeta' => ['required', 'regex:/^\d{4}\s\d{4}\s\d{4}\s\d{4}$/'],
+            'numero_tarjeta' => ['required', 'regex:/^\d{4}\s\d{4}\s\d{4}\s\d{4}$/', 'luhn'],
             'nombre_tarjeta' => ['required', 'string'],
             'fecha_vencimiento' => ['required', 'regex:/^(0[1-9]|1[0-2])\/\d{2}$/'],
             'cvv' => ['required', 'digits_between:3,4'],
         ], [
             'numero_tarjeta.required' => 'El número de tarjeta es obligatorio.',
             'numero_tarjeta.regex' => 'Debe ser XXXX XXXX XXXX XXXX.',
+            'numero_tarjeta.luhn' => 'El número de tarjeta no es válido.',
             'nombre_tarjeta.required' => 'El nombre en la tarjeta es obligatorio.',
             'fecha_vencimiento.required' => 'La fecha de vencimiento es obligatoria.',
             'fecha_vencimiento.regex' => 'Formato inválido (MM/AA).',
@@ -150,37 +145,18 @@ class TasController extends Controller
         $validacionCliente = $this->validarDatosCliente($request);
 
         if ($validacionCliente !== true) {
-            return back()->withErrors($validacionCliente)->withInput();
+            return back()->withErrors($validacionCliente, 'registro')->withInput();
         }
 
-        // ========== VALIDACIÓN DE TARJETA ==========
         if ($request->input('omitir_pago') != '1') {
 
             $validacionTarjeta = $this->validarDatosTarjeta($request);
 
             if ($validacionTarjeta !== true) {
-                // ❌ Si los datos de tarjeta son incorrectos -> mostrar errores
-                return back()->withErrors($validacionTarjeta)->withInput();
+                return back()->withErrors($validacionTarjeta, 'tarjeta')->withInput();
             }
-
-            // ✅ Si son correctos -> crear usuario y redirigir igual que Omitir
-            $resultado = $this->tasService->crearUsuario(
-                $request->correo,
-                $request->nip,
-                $request->nombre,
-                $request->apellido
-            );
-
-            if ($resultado != 1) {
-                return back()->with('error', $resultado)->withInput();
-            }
-
-            return redirect()
-                ->route('tas_loginView')
-                ->with('success', 'Usuario creado correctamente');
         }
 
-        // ========== CASO OMITIR PAGO ==========
         $resultado = $this->tasService->crearUsuario(
             $request->correo,
             $request->nip,
@@ -192,22 +168,16 @@ class TasController extends Controller
             return back()->with('error', $resultado)->withInput();
         }
 
-        return redirect()
-            ->route('tas_loginView')
-            ->with('success', 'Usuario creado correctamente');
+        return redirect()->route('tas_loginView')->with('success', 'Usuario creado correctamente');
     }
 
     public function logout()
     {
-        $usuarioSession = session('usuario');
-        $correo = $usuarioSession['correo'] ?? null;
-
-        if ($correo) {
-            $this->tasService->cerrarSesion($correo);
+        $usuario = session('usuario');
+        if ($usuario) {
+            $this->tasService->cerrarSesion($usuario['correo']);
         }
-
         session()->flush();
-
         return redirect()->route('tas_loginView');
     }
 }

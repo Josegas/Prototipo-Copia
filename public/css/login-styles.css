@@ -472,5 +472,8 @@ body.login-page {
                 padding-left: 12px;
             }
         }
-        
+        .btn-login-submit {
+    pointer-events: auto !important;
+}
+
 }
