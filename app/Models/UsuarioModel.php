@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class UsuarioModel extends Model
 {
     protected $table = 'usuarios';
+    protected $primaryKey = 'id_usuario';
     protected $fillable = [
         'correo', 
         'nip',
@@ -15,7 +16,8 @@ class UsuarioModel extends Model
         'sesion_activa',
         'intentos_login',
         'ultimo_intento',
-        'bloqueado_hasta'
+        'bloqueado_hasta',
+        'rol'
     ];
     protected $hidden = ['nip'];
 

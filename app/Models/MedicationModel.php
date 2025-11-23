@@ -1,0 +1,17 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class MedicationModel extends Model
+{
+    protected $table = 'medicamentos';
+    protected $fillable = ['id_medicamento', 'nombre', 'especificacion', 'laboratorio','es_controlado'];
+    public $timestamps = false;
+
+    public function prescriptions()
+    {
+        return $this->hasMany(PrescriptionMedicationModel::class, 'id_medicamento', 'id_medicamento');
+    }
+}

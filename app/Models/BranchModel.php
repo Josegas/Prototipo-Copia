@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class BranchModel extends Model
+{
+    protected $table = 'sucursales';
+    protected $primaryKey = 'id_sucursal';
+    protected $fillable = ['id_sucursal', 'id_cadena', 'nombre','latitud','longitud'];
+    public $timestamps = false;
+
+    public function medications()
+    {
+        return $this->belongsToMany(
+            MedicationModel::class,
+            'inventarios',
+            'id_sucursal',
+            'id_medicamento'
+        )->withPivot('stock_actual', 'stock_minimo', 'stock_maximo');
+    }
+}

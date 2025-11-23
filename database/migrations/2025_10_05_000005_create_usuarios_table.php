@@ -10,7 +10,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('usuarios', function (Blueprint $table) {
-            $table->id();
+            $table->id('id_usuario');
             $table->string('correo',255)->unique();
             $table->string('nip',100);
             $table->string('nombre',50);
@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedTinyInteger('intentos_login')->default(0);
             $table->timestamp('ultimo_intento')->nullable();
             $table->timestamp('bloqueado_hasta')->nullable();
+            $table->enum('rol', ['paciente', 'empleado'])->default('paciente');
         });
     }
 
