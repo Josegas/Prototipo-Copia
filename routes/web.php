@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TasController;
 use App\Http\Controllers\RecetaController;
+use App\Http\Controllers\TasController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', [TasController::class, 'tas_inicioView'])->name('tas_inicioView');
 
@@ -19,9 +19,11 @@ Route::post('/registro', [TasController::class, 'tas_crearCuenta'])->name('tas_c
 Route::post('/registro/validar-cliente', [TasController::class, 'validarPasoCliente'])
     ->name('tas.validarPasoCliente');
 
-Route::get('/subir-receta', [RecetaController::class, 'subirRecetaView'])
+Route::get('/subir_receta', [RecetaController::class, 'subirRecetaView'])
     ->middleware('verificar.sesion')
     ->name('subirRecetaView');
+
+Route::get('/sucursales', [TasController::class, 'mapaSucursales']);
 
 Route::post('/logout', [TasController::class, 'logout'])
     ->middleware('verificar.sesion')

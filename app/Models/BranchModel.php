@@ -11,6 +11,11 @@ class BranchModel extends Model
     protected $fillable = ['id_sucursal', 'id_cadena', 'nombre','latitud','longitud'];
     public $timestamps = false;
 
+    public function cadena()
+    {
+        return $this->belongsTo(PharmacyModel::class, 'id_cadena', 'id_cadena');
+    }
+
     public function medications()
     {
         return $this->belongsToMany(

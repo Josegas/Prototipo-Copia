@@ -116,4 +116,8 @@ class TasService
         $usuario->cerrarSesion();
         $this->actualizarSesion($usuario);
     }
+    public function getSucursales()
+{
+    return $this->tasRepository->obtenerSucursales();
+}
 }

@@ -6,7 +6,8 @@
 }
 
 .formulario-receta-card {
-    max-width: 700px;
+    max-width: 900px;
+    margin: 2rem auto;
     border-radius: 20px;
     overflow: hidden;
     animation: slideUp 0.5s ease-out;
@@ -25,7 +26,7 @@
 
 .formulario-receta-header {
     background: linear-gradient(135deg, var(--color-principal) 0%, var(--color-cyan) 100%);
-    padding: 30px 20px;
+    padding: 40px 30px;
     position: relative;
     overflow: hidden;
 }
@@ -54,34 +55,43 @@
     position: relative;
     z-index: 1;
     font-weight: 600;
+    font-size: 1.6em;
     text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card-body {
+    padding: 50px 60px !important;
 }
 
 .farmacia-badge {
     background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
-    padding: 15px 25px;
+    padding: 20px 30px;
     border-radius: 15px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.07);
-    margin-bottom: 25px;
+    margin-bottom: 40px;
+    text-align: center;
 }
 
 .farmacia-badge i {
     color: var(--color-cyan);
-    font-size: 1.3em;
+    font-size: 1.5em;
 }
 
 .farmacia-nombre {
     color: var(--color-principal);
     font-weight: 700;
-    font-size: 1.1em;
+    font-size: 1.2em;
+    margin-top: 10px;
 }
 
 .section-title {
     color: var(--color-principal);
     font-weight: 600;
-    margin-bottom: 20px;
+    font-size: 1.3em;
+    margin-bottom: 30px;
     position: relative;
-    padding-bottom: 10px;
+    padding-bottom: 15px;
+    text-align: center;
 }
 
 .section-title::after {
@@ -90,23 +100,29 @@
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 60px;
+    width: 80px;
     height: 3px;
     background: linear-gradient(90deg, var(--color-principal), var(--color-cyan));
     border-radius: 2px;
+}
+
+.d-flex.gap-3 {
+    justify-content: center;
+    margin-bottom: 30px;
 }
 
 .option-button {
     border: 2px solid var(--color-cyan);
     color: var(--color-cyan);
     background: white;
-    padding: 20px 30px;
+    padding: 25px 40px;
     border-radius: 15px;
     font-weight: 600;
+    font-size: 1.1em;
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
-    min-width: 200px;
+    min-width: 240px;
 }
 
 .option-button::before {
@@ -130,14 +146,18 @@
 }
 
 .option-button:hover::before {
-    width: 300px;
-    height: 300px;
+    width: 400px;
+    height: 400px;
 }
 
 .option-button i,
 .option-button span {
     position: relative;
     z-index: 1;
+}
+
+.option-button i {
+    font-size: 1.3em;
 }
 
 .option-button input[type="file"] {
@@ -152,6 +172,7 @@
 
 #textarea-container {
     animation: slideDown 0.4s ease-out;
+    margin-bottom: 30px;
 }
 
 @keyframes slideDown {
@@ -161,14 +182,16 @@
     }
     to {
         opacity: 1;
-        max-height: 300px;
+        max-height: 400px;
     }
 }
 
 .receta-textarea {
     border: 2px solid #e0e0e0;
     border-radius: 12px;
-    padding: 15px;
+    padding: 20px;
+    font-size: 1.05em;
+    min-height: 200px;
     transition: all 0.3s ease;
 }
 
@@ -177,14 +200,18 @@
     box-shadow: 0 0 0 3px rgba(0,168,204,0.1);
 }
 
+.text-center.mt-4 {
+    margin-top: 40px !important;
+}
+
 .btn-submit {
     background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
     border: none;
     color: white;
-    padding: 15px 40px;
+    padding: 18px 50px;
     border-radius: 50px;
     font-weight: 600;
-    font-size: 1.1em;
+    font-size: 1.2em;
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(40,167,69,0.3);
 }
@@ -194,32 +221,59 @@
     box-shadow: 0 6px 20px rgba(40,167,69,0.4);
 }
 
+.btn-submit i {
+    font-size: 1.1em;
+}
+
 .formulario-receta-footer {
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    padding: 20px;
+    padding: 25px;
     border-top: 3px solid var(--color-cyan);
 }
 
 .step-badge {
     background: linear-gradient(135deg, var(--color-principal), var(--color-cyan));
     color: white;
-    padding: 8px 20px;
+    padding: 10px 25px;
     border-radius: 20px;
     font-weight: 600;
+    font-size: 1.05em;
     display: inline-block;
+}
+
+@media (max-width: 768px) {
+    .formulario-receta-card {
+        max-width: 100%;
+        margin: 1rem;
+    }
+    
+    .card-body {
+        padding: 40px 30px !important;
+    }
 }
 
 @media (max-width: 576px) {
     .option-button {
         min-width: 100%;
-        padding: 18px 25px;
+        padding: 20px 30px;
+        font-size: 1em;
     }
     
     .formulario-receta-header {
-        padding: 25px 15px;
+        padding: 30px 20px;
     }
     
     .formulario-receta-header h4 {
         font-size: 1.3em;
+    }
+    
+    .card-body {
+        padding: 30px 20px !important;
+    }
+    
+    .btn-submit {
+        width: 100%;
+        padding: 16px 40px;
+        font-size: 1.1em;
     }
 }

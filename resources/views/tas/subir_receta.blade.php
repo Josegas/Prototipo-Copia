@@ -1,4 +1,3 @@
-{{-- Blade View --}}
 @extends('layouts.template')
 
 @section('title', 'Subir Receta')
@@ -17,8 +16,4 @@
         <x-formulario_receta />
     </div>
 </div>
-
-@push('scripts')
-<script src="{{ asset('js/receta-script.js') }}"></script>
-@endpush
 @endsection

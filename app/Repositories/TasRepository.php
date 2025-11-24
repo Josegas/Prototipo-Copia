@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\UsuarioModel;
+use App\Models\BranchModel;
 use App\Services\Usuario;
 use Illuminate\Support\Facades\DB;
 
@@ -66,6 +67,17 @@ class TasRepository
             $usuarioModel->save();
         } catch (\Exception $e) {
             return null;
+        }
+    }
+    public function obtenerSucursales()
+    {
+    try {
+        return BranchModel::with('cadena:id_cadena,nombre')
+            ->select('id_sucursal', 'id_cadena', 'nombre', 'latitud', 'longitud')
+            ->get();
+    } catch (\Exception $e) {
+        \Log::error('Error al obtener sucursales: ' . $e->getMessage());
+        return null;
         }
     }
 }

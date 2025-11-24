@@ -6,6 +6,15 @@
         </h4>
     </div>
 
+    <div class="px-4 pt-3">
+        <label for="filtro_cadena" class="form-label fw-bold">
+            <i class="fas fa-filter me-2"></i>Filtrar por cadena
+        </label>
+        <select id="filtro_cadena" class="form-select">
+            <option value="">Todas las cadenas</option>
+        </select>
+    </div>
+
     <div class="card-body p-4">
         <div id="map" class="map-container"></div>
     </div>
@@ -13,20 +22,19 @@
     <div class="card-footer text-center mapa-farmacias-footer">
         <div class="footer-content">
             <p class="mb-1 footer-instruction">
-                <i class="fas fa-hand-pointer me-2"></i>Haz clic en una farmacia para seleccionarla
+                <i class="fas fa-hand-pointer me-2"></i>
+                Haz clic en una farmacia para seleccionarla
             </p>
             <small class="text-muted footer-attribution">
                 <i class="fas fa-map me-1"></i>Fuente del mapa: OpenStreetMap (Leaflet.js)
             </small>
         </div>
     </div>
-</div>
-
     <div class="card-footer text-center formulario-receta-footer">
-        <span class="step-badge">
-            <i class="fas fa-check-circle me-2"></i>Paso 2 de 3
-        </span>
-    </div>
+    <span class="step-badge">
+        <i class="fas fa-check-circle me-2"></i>Paso 1 de 3
+    </span>
+</div>
 </div>
 
 @push('styles')

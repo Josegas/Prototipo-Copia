@@ -13,39 +13,28 @@
             <div class="farmacia-nombre mt-2" id="farmacia-seleccionada"></div>
         </div>
 
-        <form>
-            @csrf
-            
-            <p class="section-title text-center">Selecciona cómo subir tu receta</p>
+        <p class="section-title text-center">Selecciona cómo subir tu receta</p>
 
-            <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
-                <button type="button" class="option-button position-relative">
-                    <input type="file" name="foto_receta" accept="image/*" capture="environment">
-                    <i class="fas fa-camera fa-lg me-2"></i>
-                    <span>Seleccionar foto</span>
-                </button>
+        <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
+            <button type="button" class="option-button position-relative">
+                <input type="file" name="foto_receta" accept="image/*" capture="environment">
+                <i class="fas fa-camera fa-lg me-2"></i>
+                <span>Seleccionar foto</span>
+            </button>
 
-                <button type="button" class="option-button" onclick="toggleTextarea()">
-                    <i class="fas fa-keyboard fa-lg me-2"></i>
-                    <span>Escribir receta</span>
-                </button>
-            </div>
+            <button type="button" class="option-button" onclick="toggleTextarea()">
+                <i class="fas fa-keyboard fa-lg me-2"></i>
+                <span>Escribir receta</span>
+            </button>
+        </div>
 
-            <div id="textarea-container" class="mb-4 d-none">
-                <label for="receta_texto" class="form-label fw-semibold text-secondary">
-                    <i class="fas fa-pills me-2"></i>Escribe los medicamentos recetados:
-                </label>
-                <textarea name="receta_texto" id="receta_texto" rows="6"
-                    class="form-control receta-textarea"
-                    placeholder="Ejemplo: Paracetamol 500mg, una tableta cada 8 horas..."></textarea>
-            </div>
+        <x-formulario_escribir_receta />
 
-            <div class="text-center mt-4">
-                <button type="submit" class="btn btn-submit">
-                    <i class="fas fa-paper-plane me-2"></i>Enviar receta
-                </button>
-            </div>
-        </form>
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-submit">
+                <i class="fas fa-paper-plane me-2"></i>Enviar receta
+            </button>
+        </div>
     </div>
 
     <div class="card-footer text-center formulario-receta-footer">
@@ -56,5 +45,9 @@
 </div>
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('css/formulario-receta-styles.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/formulario-receta-styles.css') }}">
+@endpush
+
+@push('scripts')
+    <script src="{{ asset('js/subir-receta-script.js') }}"></script>
 @endpush
