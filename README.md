@@ -54,7 +54,7 @@ A collaborative system between pharmacy chains that enables:
 
 ```bash
 # Clone repository
-git clone https://github.com/your-org/te-acerco-salud.git
+git clone https://github.com/TasWebTeam/TasWebProject.git
 cd te-acerco-salud
 
 # Install dependencies
