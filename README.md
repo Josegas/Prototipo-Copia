@@ -1,5 +1,5 @@
 <div align="center">
-  <img width="1080" height="905" alt="image" src="https://github.com/user-attachments/assets/749512cd-402c-44ac-93ef-b14a5813ca46" />
+  <img width="1080" height="500" alt="image" src="https://github.com/user-attachments/assets/749512cd-402c-44ac-93ef-b14a5813ca46" />
 
   # Te Acerco Salud (TAS)
 </div>
@@ -125,5 +125,3 @@ te-acerco-salud/
 
 This project was developed as a team effort by Computer Systems Engineering students.
 ---
-
-**Version**: 1.0.0 | **Last Updated**: November 2025
