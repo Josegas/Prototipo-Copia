@@ -28,7 +28,7 @@ A collaborative system between pharmacy chains that enables:
 
 - **Backend**: Laravel (PHP) - MVC Architecture
 - **Frontend**: Laravel Blade
-- **Mobile**: Android Studio (Kotlin/Java), Dart (Flutter)
+- **Mobile**: Android Studio (Kotlin/Java), Flutter (Dart)
 - **Database**: MySQL/PostgreSQL
 - **API**: RESTful Web Services
 - **Methodology**: Unified Process (UP) & SCRUM
