@@ -27,13 +27,17 @@ return new class extends Migration
                 ->references('id_usuario')
                 ->on('usuarios');
 
-            $table->foreign('id_cadenaDestino')
+            /*$table->foreign('id_cadenaDestino')
                 ->references('id_cadena')
                 ->on('sucursales');
 
             $table->foreign('id_sucursalDestino')
                 ->references('id_sucursal')
-                ->on('sucursales');
+                ->on('sucursales');*/
+            $table->foreign(['id_cadenaDestino', 'id_sucursalDestino'], 'fk_recetas_sucursalesDestino')
+            ->references(['id_cadena', 'id_sucursal'])
+            ->on('sucursales');
+
         });
     }
 
