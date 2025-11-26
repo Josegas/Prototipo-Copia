@@ -1,61 +1,126 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<div align="center">
+  <img width="400" height="400" alt="image" src="https://github.com/user-attachments/assets/749512cd-402c-44ac-93ef-b14a5813ca46" />
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+  # Te Acerco Salud (TAS)
+</div>
 
-## About Laravel
+## Overview
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**Te Acerco Salud** is a web and mobile platform that connects patients with a collaborative pharmacy network to streamline prescription fulfillment. Users can upload prescriptions, select their preferred pharmacy, and ensure complete medication availability without visiting multiple locations.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Problem Statement
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Patients often cannot fill complete prescriptions at a single pharmacy, leading to:
+- Multiple pharmacy visits and increased transportation costs
+- Treatment delays
+- Health risks for critical patients
+- Poor user experience due to fragmented inventory
 
-## Learning Laravel
+## Solution
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+A collaborative system between pharmacy chains that enables:
+- Digital prescription submission
+- Automatic medication availability verification
+- Cross-pharmacy cooperation for complete fulfillment
+- Optimized delivery and pickup times
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Tech Stack
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **Backend**: Laravel (PHP) - MVC Architecture
+- **Frontend**: Laravel Blade
+- **Mobile**: Android Studio (Kotlin/Java), Flutter (Dart)
+- **Database**: MySQL/PostgreSQL
+- **API**: RESTful Web Services
+- **Methodology**: Unified Process (UP) & SCRUM
+- **Modeling**: UML & UWE notation
+- **CASE Tool**: Enterprise Architect
 
-## Laravel Sponsors
+## Key Features
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Patients
+- User registration and profile management
+- Enter prescriptions manually (text input)
+- Pharmacy and branch selection
+- Medication availability verification
+- Order tracking and notifications
 
-### Premium Partners
+### Pharmacies
+- Branch registration in collaborative network
+- Real-time inventory management
+- Order processing
+- Cross-branch cooperation system
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## Installation
 
-## Contributing
+```bash
+# Clone repository
+git clone https://github.com/TasWebTeam/TasWebProject.git
+cd te-acerco-salud
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+# Install dependencies
+composer install
+npm install
 
-## Code of Conduct
+# Environment setup
+cp .env.example .env
+php artisan key:generate
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# Configure database in .env
+DB_CONNECTION=mysql
+DB_DATABASE=tas_db
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
 
-## Security Vulnerabilities
+# Run migrations
+php artisan migrate
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# Compile assets
+npm run dev
 
-## License
+# Start server
+php artisan serve
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Security
+
+- Authentication: Laravel Sanctum/Passport
+- Password encryption: bcrypt
+- CSRF protection
+- API rate limiting
+- Input validation and sanitization
+
+## User Roles
+
+1. **Patient** - Upload prescriptions and place orders
+2. **Pharmacy Employee** - Process orders
+   
+## Development Methodology
+
+**SCRUM**
+- 2-week sprints
+- Daily standups
+- Sprint planning, review, and retrospectives
+
+**Unified Process**
+- Inception, Elaboration, Construction, Transition phases
+
+## Project Structure
+
+```
+te-acerco-salud/
+├── app/
+│   ├── Http/Controllers/
+│   ├── Models/
+│   └── Services/
+├── database/migrations/
+├── resources/views/
+├── routes/
+│   ├── web.php
+│   └── api.php
+├── tests/
+└── docs/models/
+```
+
+## Team
+
+This project was developed as a team effort by Computer Systems Engineering students.
