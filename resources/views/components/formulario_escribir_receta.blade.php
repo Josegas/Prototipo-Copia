@@ -13,13 +13,6 @@
             </label>
             <input type="number" class="form-control receta-textarea" id="quantity" placeholder="0" min="1">
         </div>
-
-        <div class="col-12 col-md-4">
-            <label for="inStock" class="form-label fw-bold">
-                <i class="fas fa-box me-2"></i>En existencia
-            </label>
-            <input type="text" class="form-control receta-textarea bg-light" id="inStock" value="0" readonly>
-        </div>
     </div>
 
     <div class="d-flex justify-content-center mb-3">

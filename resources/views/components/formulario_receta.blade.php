@@ -2,7 +2,7 @@
     <div class="card-header text-white text-center formulario-receta-header">
         <h4 class="mb-0">
             <i class="fas fa-file-medical me-2"></i>
-            Subir o escribir receta médica
+            Capturar receta médica
         </h4>
     </div>
 
