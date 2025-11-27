@@ -79,19 +79,19 @@
             <div class="col-md-3 mb-4">
                 <h6 class="fw-bold">Acerca de nosotros</h6>
                 <ul class="list-unstyled">
-                    <li><a href="#" class="text-white text-decoration-none">Quiénes somos</a></li>
-                    <li><a href="#" class="text-white text-decoration-none">Aviso de privacidad</a></li>
-                    <li><a href="#" class="text-white text-decoration-none">Términos y condiciones</a></li>
-                    <li><a href="#" class="text-white text-decoration-none">Blog</a></li>
+                    <li><a href="{{route('acerca')}}#quienes"class="text-white text-decoration-none">Quiénes somos</a></li>
+                    <li><a href="{{route('acerca')}}#privacidad"class="text-white text-decoration-none">Aviso de privacidad</a></li>
+                    <li><a href="{{route('acerca')}}#terminos" class="text-white text-decoration-none">Términos y condiciones</a></li>
+                    <li><a href="{{route('acerca')}}#blog" class="text-white text-decoration-none">Blog</a></li>
                 </ul>
             </div>
 
             <div class="col-md-3 mb-4">
                 <h6 class="fw-bold">Servicio al cliente</h6>
                 <ul class="list-unstyled">
-                    <li><a href="#" class="text-white text-decoration-none">Preguntas frecuentes</a></li>
-                    <li><a href="#" class="text-white text-decoration-none">Contacto</a></li>
-                    <li><a href="#" class="text-white text-decoration-none">Retiro en sucursal</a></li>
+                    <li><a href="{{route('servicio')}}#faq" class="text-white text-decoration-none">Preguntas frecuentes</a></li>
+                    <li><a href="{{route('servicio')}}#contacto" class="text-white text-decoration-none">Contacto</a></li>
+                    <li><a href="{{route('servicio')}}#retiro" class="text-white text-decoration-none">Retiro en sucursal</a></li>
                 </ul>
             </div>
 

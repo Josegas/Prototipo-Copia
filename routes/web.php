@@ -33,5 +33,5 @@ Route::post('/logout', [TasController::class, 'logout'])
 
 
 
-Route::view('/acerca', 'pages.acerca')->name('acerca');
-Route::view('/servicio', 'pages.servicio')->name('servicio');
+Route::view('/acerca', 'tas.acerca')->name('acerca');
+Route::view('/servicio', 'tas.servicio')->name('servicio');
