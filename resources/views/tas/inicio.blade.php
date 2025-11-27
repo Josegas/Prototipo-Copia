@@ -1,65 +1,87 @@
-
 @extends('layouts.template')
 @section('title', 'Inicio')
 
 @section('content')
-{{-- CONTENIDO DENTRO DEL CONTAINER --}}
-<div class="container py-5" style="min-height: calc(100vh - 400px);">
-        <div class="row justify-content-center w-100">
-            <div class="col-lg-8 text-center">
-                <div class="mb-4">
-                    <img src="/images/logo.png" alt="TAS Logo" class="img-fluid" style="max-height: 200px; margin-top: 20px;">
-                </div>
-                <h1 class="display-4 fw-bold mb-3" style="color: #003865;">
-                    Todos tus medicamentos, en un solo lugar
-                </h1>
-                <p class="lead text-muted mb-4 fs-4">
-                    Te Acerco Salud (TAS) es una plataforma tecnológica completa que une a pacientes con farmacias de forma
-                    eficiente, asegurando que sus recetas médicas estén siempre disponibles. Usando nuestra aplicación en
-                    línea y móvil, los usuarios pueden elegir las sucursales, enviar sus recetas y obtener sus medicamentos
-                    sin complicaciones, ahorrando tiempo y dinero y garantizando un acceso rápido a los tratamientos. TAS
-                    facilita la comunicación entre farmacias y ofrece una experiencia de salud más sencilla, confiable y
-                    accesible para todos los pacientes.
-                </p>
-            </div>
-        </div>
 
-        @php
-            $partnerLogos = [
-                ['name' => 'Farmacias del Ahorro', 'file' => 'aho.png'],
-                ['name' => 'Farmacias Guadalajara', 'file' => 'gdl.png'],
-                ['name' => 'Farmacias Benavides', 'file' => 'bnv.png'],
-                ['name' => 'Farmacias Similares', 'file' => 'sim.png'],
-                ['name' => 'Farmacias Farmacon', 'file' => 'far.png'],
-            ];
-        @endphp
-
-        <div class="row justify-content-center mt-5">
-            <div class="col-lg-10">
-                <div class="partner-carousel position-relative p-4 p-md-5">
-                    <div class="d-flex flex-column align-items-center gap-3 mb-4 text-center">
-                        <div>
-                            <p class="text-uppercase text-muted fw-semibold mb-1 small">Farmacias colaboradoras</p>
-                            <h2 class="h3 fw-bold mb-0" style="color: #003865;">Las marcas que confían en TAS</h2>
+{{-- VIDEO HERO SECTION - Full Width pegado a navbar --}}
+<section class="video-hero-section">
+    <div class="video-container">
+        <video autoplay muted loop playsinline class="hero-video">
+            <source src="{{ asset('videos/lover.mp4') }}" type="video/mp4">
+            Tu navegador no soporta el video.
+        </video>
+        
+        {{-- Overlay oscuro para mejor legibilidad del texto --}}
+        <div class="video-overlay"></div>
+        
+        {{-- Contenido sobre el video --}}
+        <div class="video-content">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 text-center text-white">
+                        <h1 class="display-3 fw-bold mb-4 animate-fade-in">
+                            Todos tus medicamentos, en un solo lugar
+                        </h1>
+                        <p class="lead fs-4 mb-5 animate-fade-in-delay">
+                            Te Acerco Salud (TAS) es una plataforma tecnológica completa que une a pacientes con farmacias de forma eficiente.
+                        </p>
+                        <div class="animate-fade-in-delay-2">
+                            <a href="#farmacias" class="btn btn-light btn-lg px-5 py-3 me-3 mb-3">
+                                Ver farmacias
+                            </a>
+                            <a href="{{ route('servicio') }}" class="btn btn-outline-light btn-lg px-5 py-3 mb-3">
+                                Saber más
+                            </a>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        
+        {{-- Indicador de scroll --}}
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </div>
+</section>
 
-                    <div class="logo-strip position-relative overflow-hidden">
-                        <div class="fade-edge start"></div>
-                        <div class="fade-edge end"></div>
-                        <div class="logo-track d-flex align-items-center">
-                            @foreach (range(1, 2) as $loopIndex)
-                                @foreach ($partnerLogos as $logo)
-                                    <div class="logo-card text-center">
-                                        <div class="logo-wrapper d-flex align-items-center justify-content-center mb-2">
-                                            <img src="{{ asset('images/farmacias/' . $logo['file']) }}" alt="Logo de {{ $logo['name'] }}"
-                                                class="img-fluid" loading="lazy">
-                                        </div>
-                                        <p class="mb-0 fw-semibold text-muted">{{ $logo['name'] }}</p>
+{{-- SECCIÓN DE FARMACIAS COLABORADORAS --}}
+<div class="container py-5" id="farmacias">
+    @php
+        $partnerLogos = [
+            ['name' => 'Farmacias del Ahorro', 'file' => 'aho.png'],
+            ['name' => 'Farmacias Guadalajara', 'file' => 'gdl.png'],
+            ['name' => 'Farmacias Benavides', 'file' => 'bnv.png'],
+            ['name' => 'Farmacias Similares', 'file' => 'sim.png'],
+            ['name' => 'Farmacias Farmacon', 'file' => 'far.png'],
+        ];
+    @endphp
+
+    <div class="row justify-content-center mt-5">
+        <div class="col-lg-10">
+            <div class="partner-carousel position-relative p-4 p-md-5">
+                <div class="d-flex flex-column align-items-center gap-3 mb-4 text-center">
+                    <div>
+                        <p class="text-uppercase text-muted fw-semibold mb-1 small">Farmacias colaboradoras</p>
+                        <h2 class="h3 fw-bold mb-0" style="color: #003865;">Las marcas que confían en TAS</h2>
+                    </div>
+                </div>
+
+                <div class="logo-strip position-relative overflow-hidden">
+                    <div class="fade-edge start"></div>
+                    <div class="fade-edge end"></div>
+                    <div class="logo-track d-flex align-items-center">
+                        @foreach (range(1, 2) as $loopIndex)
+                            @foreach ($partnerLogos as $logo)
+                                <div class="logo-card text-center">
+                                    <div class="logo-wrapper d-flex align-items-center justify-content-center mb-2">
+                                        <img src="{{ asset('images/farmacias/' . $logo['file']) }}" alt="Logo de {{ $logo['name'] }}"
+                                            class="img-fluid" loading="lazy">
                                     </div>
-                                @endforeach
+                                    <p class="mb-0 fw-semibold text-muted">{{ $logo['name'] }}</p>
+                                </div>
                             @endforeach
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -67,8 +89,12 @@
     </div>
 </div>
 
+
+
+{{-- Footer fuera del section para que sea full width --}}
 <!-- Footer -->
-<footer class="text-white pt-5 pb-4" style="background-color:#002a45; width: 100%;">
+<!--<footer class="text-white pt-5 pb-4" style="background-color:#002a45; width: 100%;"> -->
+<footer class="text-white pt-5 pb-4 footer-fullwidth"> 
     <div class="container">
         <div class="row">
             <div class="col-md-3 mb-4 text-center text-md-start">
@@ -118,6 +144,7 @@
                                 class="payment-logo">
                         @endforeach 
                 </div>
+            </div>
         </div>
 
         <hr class="border-light">
@@ -127,15 +154,66 @@
         </div>
     </div>
     <a href="#" id="btnScrollTop" class="btn position-fixed"
-   style="bottom: 20px; right: 20px; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; z-index: 1000;">
-    <i class="fas fa-arrow-up"></i>
+       style="bottom: 20px; right: 20px; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; z-index: 1000;">
+        <i class="fas fa-arrow-up"></i>
     </a>
-
 </footer>
 @endsection
-
 @push('styles')
+<link rel="stylesheet" href="{{ asset('css/video-background.css') }}">
 <link rel="stylesheet" href="{{ asset('css/carrusel.css') }}">
 <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
 @endpush
 
+@push('scripts')
+<script>
+    // Smooth scroll para el indicador
+    document.querySelector('.scroll-indicator')?.addEventListener('click', function() {
+        document.querySelector('#farmacias').scrollIntoView({ 
+            behavior: 'smooth' 
+        });
+    });
+
+    // Botón scroll to top
+    const btnScrollTop = document.getElementById('btnScrollTop');
+    if (btnScrollTop) {
+        btnScrollTop.addEventListener('click', e => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+</script>
+@endpush
+<!--@push('scripts')
+<script>
+    // Smooth scroll para el indicador del video
+    document.querySelector('.scroll-indicator')?.addEventListener('click', function() {
+        document.querySelector('#farmacias').scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+
+    // Botón scroll-to-top: mostrar solo cuando se hace scroll
+    const btnScrollTop = document.getElementById('btnScrollTop');
+
+    if (btnScrollTop) {
+        // Mostrar / ocultar según el scroll
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                btnScrollTop.classList.add('show');
+            } else {
+                btnScrollTop.classList.remove('show');
+            }
+        });
+
+        // Subir suavemente al hacer clic
+        btnScrollTop.addEventListener('click', e => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+</script>
+@endpush -->
