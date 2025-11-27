@@ -30,3 +30,8 @@ Route::get('/subir_receta', [TasController::class, 'tas_subirRecetaView'])
 Route::post('/logout', [TasController::class, 'logout'])
     ->middleware('verificar.sesion')
     ->name('logout');
+
+
+
+Route::view('/acerca', 'pages.acerca')->name('acerca');
+Route::view('/servicio', 'pages.servicio')->name('servicio');
