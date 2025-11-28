@@ -1,0 +1,22 @@
+/* Sección: ¿Cómo funciona TAS? */
+.como-funciona-section {
+    background: #f8fbfd;
+}
+
+.funciona-card {
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 56, 101, 0.08);
+    transition: all 0.3s ease;
+}
+
+.funciona-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 56, 101, 0.15);
+}
+
+.icon-wrapper i {
+    color: #00a1e0;
+}
+
+

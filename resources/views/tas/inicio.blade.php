@@ -45,6 +45,142 @@
     </div>
 </section>
 
+
+<!-- SECCIÓN: ¿CÓMO FUNCIONA TAS? -->
+<section class="como-funciona-section py-5">
+    <div class="container text-center">
+
+        <h2 class="fw-bold mb-4" style="color:#003865;">¿Cómo funciona TAS?</h2>
+        <p class="text-muted mb-5 fs-5">
+            Tan simple como seguir tres pasos. Nosotros nos encargamos del resto.
+        </p>
+
+        <div class="row g-4">
+            <!-- PASO 1 -->
+            <div class="col-md-4">
+                <div class="funciona-card p-4 h-100">
+                    <div class="icon-wrapper mb-3">
+                        <i class="fas fa-file-medical fa-3x"></i>
+                    </div>
+                    <h4 class="fw-bold" style="color:#003865;">Sube tu receta</h4>
+                    <p class="text-muted">
+                        Carga tu receta médica y selecciona la sucursal a recoger.
+                    </p>
+                </div>
+            </div>
+
+            <!-- PASO 2 -->
+            <div class="col-md-4">
+                <div class="funciona-card p-4 h-100">
+                    <div class="icon-wrapper mb-3">
+                        <i class="fas fa-prescription-bottle-alt fa-3x"></i>
+                    </div>
+                    <h4 class="fw-bold" style="color:#003865;">Buscamos farmacias</h4>
+                    <p class="text-muted">
+                        TAS encuentra qué farmacias tienen tus medicamentos disponibles.
+                    </p>
+                </div>
+            </div>
+
+            <!-- PASO 3 -->
+            <div class="col-md-4">
+                <div class="funciona-card p-4 h-100">
+                    <div class="icon-wrapper mb-3">
+                        <i class="fas fa-truck-medical fa-3x"></i>
+                    </div>
+                    <h4 class="fw-bold" style="color:#003865;">Recibe tus medicamentos</h4>
+                    <p class="text-muted">
+                        Recoge sin complicaciones.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+
+
+
+<!-- SECCIÓN: BENEFICIOS DE TAS -->
+<section class="beneficios-section py-3"> <!--"beneficios-section py-3"-->
+    <div class="container text-center">
+        <h2 class="fw-bold mb-4" style="color:#003865;">Beneficios de usar TAS</h2>
+        <p class="text-muted mb-5 fs-5">
+            Disfruta de una experiencia rápida, segura y confiable al surtir tus medicamentos.
+        </p>
+
+        <div class="row g-4">
+            <!-- Beneficio 1 -->
+            <div class="col-md-3">
+                <div class="beneficio-card p-4 h-100">
+                    <div class="icon-wrapper mb-3">
+                        <i class="fas fa-clock fa-3x"></i>
+                    </div>
+                    <h5 class="fw-bold" style="color:#003865;">Ahorro de tiempo</h5>
+                    <p class="text-muted">
+                        Evita filas y espera; tu pedido está listo cuando llegas.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Beneficio 2 -->
+            <div class="col-md-3">
+                <div class="beneficio-card p-4 h-100">
+                    <div class="icon-wrapper mb-3">
+                        <i class="fas fa-map-marker-alt fa-3x"></i>
+                    </div>
+                    <h5 class="fw-bold" style="color:#003865;">Varias sucursales disponibles</h5>
+                    <p class="text-muted">
+                        Encuentra tu medicamento en farmacias cercanas.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Beneficio 3 -->
+            <div class="col-md-3">
+                <div class="beneficio-card p-4 h-100">
+                    <div class="icon-wrapper mb-3">
+                        <i class="fas fa-mobile-alt fa-3x"></i>
+                    </div>
+                    <h5 class="fw-bold" style="color:#003865;">Mira el estado de tu pedido desde tu celular</h5>
+                    <p class="text-muted">
+                        Controla cada paso de tu pedido en tiempo real.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Beneficio 4 -->
+            <div class="col-md-3">
+                <div class="beneficio-card p-4 h-100">
+                    <div class="icon-wrapper mb-3">
+                        <i class="fas fa-check-circle fa-3x"></i>
+                    </div>
+                    <h5 class="fw-bold" style="color:#003865;">Farmacias verificadas</h5>
+                    <p class="text-muted">
+                        Solo trabajamos con farmacias confiables y certificadas.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {{-- SECCIÓN DE FARMACIAS COLABORADORAS --}}
 <div class="container py-5" id="farmacias">
     @php
@@ -57,12 +193,12 @@
         ];
     @endphp
 
-    <div class="row justify-content-center mt-5">
+    <div class="row justify-content-center mt-0">
         <div class="col-lg-10">
             <div class="partner-carousel position-relative p-4 p-md-5">
                 <div class="d-flex flex-column align-items-center gap-3 mb-4 text-center">
                     <div>
-                        <p class="text-uppercase text-muted fw-semibold mb-1 small">Farmacias colaboradoras</p>
+                        <p class="text-uppercase text-muted fw-semibold mb-1 fs-5">Farmacias colaboradoras</p>
                         <h2 class="h3 fw-bold mb-0" style="color: #003865;">Las marcas que confían en TAS</h2>
                     </div>
                 </div>
@@ -88,6 +224,7 @@
         </div>
     </div>
 </div>
+
 
 
 
@@ -158,9 +295,14 @@
         <i class="fas fa-arrow-up"></i>
     </a>
 </footer>
+
+
+
 @endsection
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/video-background.css') }}">
+<link rel="stylesheet" href="{{ asset('css/comofuncionatas.css') }}">
+<link rel="stylesheet" href="{{ asset('css/beneficiostas.css') }}">
 <link rel="stylesheet" href="{{ asset('css/carrusel.css') }}">
 <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
 @endpush
@@ -184,36 +326,3 @@
     }
 </script>
 @endpush
-<!--@push('scripts')
-<script>
-    // Smooth scroll para el indicador del video
-    document.querySelector('.scroll-indicator')?.addEventListener('click', function() {
-        document.querySelector('#farmacias').scrollIntoView({
-            behavior: 'smooth'
-        });
-    });
-
-    // Botón scroll-to-top: mostrar solo cuando se hace scroll
-    const btnScrollTop = document.getElementById('btnScrollTop');
-
-    if (btnScrollTop) {
-        // Mostrar / ocultar según el scroll
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 20) {
-                btnScrollTop.classList.add('show');
-            } else {
-                btnScrollTop.classList.remove('show');
-            }
-        });
-
-        // Subir suavemente al hacer clic
-        btnScrollTop.addEventListener('click', e => {
-            e.preventDefault();
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-    }
-</script>
-@endpush -->
