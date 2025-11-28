@@ -1,15 +1,10 @@
-/* ===================================
-   VIDEO HERO SECTION - FULL WIDTH
-   =================================== */
 
-/* Asegurar que body y html no interfieran */
 body, html {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
 }
 
-/* Sección del video - Full Width pegado a navbar */
 .video-hero-section {
     position: relative;
     width: 100vw;
@@ -18,7 +13,7 @@ body, html {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    /* Romper el contenedor padre para ser full width */
+
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
     max-width: 100vw;
@@ -30,7 +25,6 @@ body, html {
     height: 100%;
 }
 
-/* Video de fondo - Cobertura completa */
 .hero-video {
     position: absolute;
     top: 50%;
@@ -44,7 +38,6 @@ body, html {
     z-index: 1;
 }
 
-/* Overlay oscuro para legibilidad del texto */
 .video-overlay {
     position: absolute;
     top: 0;
@@ -59,7 +52,6 @@ body, html {
     z-index: 2;
 }
 
-/* Contenido sobre el video */
 .video-content {
     position: absolute;
     top: 50%;
@@ -70,9 +62,6 @@ body, html {
     padding: 20px;
 }
 
-/* ===================================
-   ANIMACIONES
-   =================================== */
 
 @keyframes fadeInUp {
     from {
@@ -97,9 +86,6 @@ body, html {
     animation: fadeInUp 1s ease-out 0.6s both;
 }
 
-/* ===================================
-   BOTONES
-   =================================== */
 
 .video-content .btn {
     font-weight: 600;
@@ -135,9 +121,7 @@ body, html {
     transform: translateY(-2px);
 }
 
-/* ===================================
-   INDICADOR DE SCROLL
-   =================================== */
+
 
 .scroll-indicator {
     position: absolute;
@@ -167,9 +151,7 @@ body, html {
     color: #00a1e0;
 }
 
-/* ===================================
-   RESPONSIVE
-   =================================== */
+
 
 @media (max-width: 768px) {
     .video-hero-section {
@@ -213,7 +195,6 @@ body, html {
     }
 }
 
-/* Asegurar que el video cubra toda la pantalla según aspect ratio */
 @media (max-aspect-ratio: 16/9) {
     .hero-video {
         width: auto;

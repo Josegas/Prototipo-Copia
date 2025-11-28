@@ -1,4 +1,3 @@
-{{-- Footer fuera del section para que sea full width --}}
 <!-- Footer -->
 <footer class="text-white pt-5 pb-4 footer-fullwidth"> 
     <div class="container">
@@ -59,8 +58,8 @@
             &copy; {{ date('Y') }} TAS - Te Acerco Salud. Todos los derechos reservados.
         </div>
     </div>
-    <a href="#" id="btnScrollTop" class="btn position-fixed"
+    <!--<a href="#" id="btnScrollTop" class="btn position-fixed"
        style="bottom: 20px; right: 20px; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; z-index: 1000;">
         <i class="fas fa-arrow-up"></i>
-    </a>
+    </a> -->
 </footer>

@@ -289,7 +289,7 @@
 <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
 @endpush
 
-@push('scripts')
+<!--@push('scripts')
 <script>
     // Smooth scroll para el indicador
     document.querySelector('.scroll-indicator')?.addEventListener('click', function() {
@@ -307,4 +307,4 @@
         });
     }
 </script>
-@endpush
+@endpush-->

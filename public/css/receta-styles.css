@@ -1,11 +1,9 @@
-/* Esta vista controla su propio layout vertical */
 
 html, body {
     margin: 0;
     padding: 0;
 }
 
-/* Wrapper que ocupa el alto de la ventana y acomoda footer abajo */
 .page-subir-receta {
     min-height: 100vh;
     display: flex;

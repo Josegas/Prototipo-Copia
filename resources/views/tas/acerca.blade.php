@@ -72,7 +72,7 @@
 </div>
 
 {{-- Footer al final del contenido --}}
-@include('layouts.footer')  {{-- si tu carpeta se llama "lyouts", cámbialo a @include('lyouts.footer') --}}
+@include('layouts.footer') 
 
 @endsection
 
