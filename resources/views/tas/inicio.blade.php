@@ -26,12 +26,39 @@
                             Te Acerco Salud (TAS) es una plataforma tecnológica completa que une a pacientes con farmacias de forma eficiente.
                         </p>
                         <div class="animate-fade-in-delay-2">
-                            <a href="#farmacias" class="btn btn-light btn-lg px-5 py-3 me-3 mb-3">
+
+
+                            <!--<a href="#farmacias" class="btn btn-light btn-lg px-5 py-3 me-3 mb-3">
                                 Ver farmacias
                             </a>
                             <a href="{{ route('servicio') }}" class="btn btn-outline-light btn-lg px-5 py-3 mb-3">
                                 Saber más
-                            </a>
+                            </a> -->
+                        
+
+                            {{-- SI NO HAY SESIÓN --}}
+                            @if (!session()->has('usuario'))
+                                <a href="{{ route('tas_loginView') }}" class="btn btn-light btn-lg px-5 py-3 me-3 mb-3">
+                                    Iniciar sesión
+                                </a>
+
+                                <a href="#farmacias" class="btn btn-outline-light btn-lg px-5 py-3 mb-3">
+                                    Ver farmacias
+                                </a>
+                            @endif
+
+                            {{-- SI HAY SESIÓN --}}
+                            @if (session()->has('usuario'))
+                                <a href="#farmacias" class="btn btn-light btn-lg px-5 py-3 me-3 mb-3">
+                                    Ver farmacias
+                                </a>
+
+                                <a href="{{ route('servicio') }}" class="btn btn-outline-light btn-lg px-5 py-3 mb-3">
+                                    Saber más
+                                </a>
+                            @endif    
+                        
+                        
                         </div>
                     </div>
                 </div>
@@ -211,76 +238,11 @@
 
 
 
-
-{{-- Footer fuera del section para que sea full width --}}
-<!-- Footer -->
-<footer class="text-white pt-5 pb-4 footer-fullwidth"> 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3 mb-4 text-center text-md-start">
-                <img src="{{ asset('images/logo.png') }}" alt="TAS Logo" class="img-fluid mb-2" style="max-height: 60px;">
-                <h5 class="fw-bold" style="color: #00a1e0;">TAS - Te Acerco Salud</h5>
-            </div>
-
-            <div class="col-md-3 mb-4">
-                <h6 class="fw-bold">Acerca de nosotros</h6>
-                <ul class="list-unstyled">
-                    <li><a href="{{route('acerca')}}#quienes"class="text-white text-decoration-none">Quiénes somos</a></li>
-                    <li><a href="{{route('acerca')}}#privacidad"class="text-white text-decoration-none">Aviso de privacidad</a></li>
-                    <li><a href="{{route('acerca')}}#terminos" class="text-white text-decoration-none">Términos y condiciones</a></li>
-                    <li><a href="{{route('acerca')}}#blog" class="text-white text-decoration-none">Blog</a></li>
-                </ul>
-            </div>
-
-            <div class="col-md-3 mb-4">
-                <h6 class="fw-bold">Servicio al cliente</h6>
-                <ul class="list-unstyled">
-                    <li><a href="{{route('servicio')}}#faq" class="text-white text-decoration-none">Preguntas frecuentes</a></li>
-                    <li><a href="{{route('servicio')}}#contacto" class="text-white text-decoration-none">Contacto</a></li>
-                    <li><a href="{{route('servicio')}}#retiro" class="text-white text-decoration-none">Retiro en sucursal</a></li>
-                </ul>
-            </div>
-
-            <div class="col-md-3 mb-4 text-center text-md-start">
-                <h6 class="fw-bold">Síguenos</h6>
-                <div class="d-flex gap-2 mb-3 justify-content-center justify-content-md-start">
-                    <a href="#" class="text-white fs-5"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="text-white fs-5"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="text-white fs-5"><i class="fab fa-tiktok"></i></a>
-                    <a href="#" class="text-white fs-5"><i class="fab fa-youtube"></i></a>
-                </div>
-                <h6 class="fw-bold">Métodos de pago</h6>
-                @php
-                    $paymentCards = [
-                        ['name' =>'Visa', 'file' => 'visa.png'],
-                        ['name' =>'MasterCard', 'file' => 'mastercard.png'],
-                        ['name' =>'Amex', 'file' => 'amex.png'],
-                    ];
-                @endphp
-                <div class="d-flex align-items-center gap-3 mt-2 justify-content-center justify-content-md-start">
-                        @foreach ($paymentCards as $card)
-                            <img src="{{ asset('images/cards/' . $card['file']) }}"
-                                alt="{{ $card['name'] }}"
-                                class="payment-logo">
-                        @endforeach 
-                </div>
-            </div>
-        </div>
-
-        <hr class="border-light">
-
-        <div class="text-center small">
-            &copy; {{ date('Y') }} TAS - Te Acerco Salud. Todos los derechos reservados.
-        </div>
-    </div>
-    <a href="#" id="btnScrollTop" class="btn position-fixed"
-       style="bottom: 20px; right: 20px; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; z-index: 1000;">
-        <i class="fas fa-arrow-up"></i>
-    </a>
-</footer>
-
+{{-- Footer al final del contenido --}}
+@include('layouts.footer') 
 
 @endsection
+
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/video-background.css') }}">
 <link rel="stylesheet" href="{{ asset('css/comofuncionatas.css') }}">
@@ -289,7 +251,7 @@
 <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
 @endpush
 
-<!--@push('scripts')
+@push('scripts')
 <script>
     // Smooth scroll para el indicador
     document.querySelector('.scroll-indicator')?.addEventListener('click', function() {
@@ -297,14 +259,5 @@
             behavior: 'smooth' 
         });
     });
-
-    // Botón scroll to top
-    const btnScrollTop = document.getElementById('btnScrollTop');
-    if (btnScrollTop) {
-        btnScrollTop.addEventListener('click', e => {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-    }
 </script>
-@endpush-->
+@endpush
