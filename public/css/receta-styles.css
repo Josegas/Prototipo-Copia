@@ -1,3 +1,16 @@
+/* Esta vista controla su propio layout vertical */
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+/* Wrapper que ocupa el alto de la ventana y acomoda footer abajo */
+.page-subir-receta {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
 .bg-tas {
     background: linear-gradient(135deg, #005B96 0%, #0077B6 100%);
     color: white !important;

@@ -53,8 +53,14 @@
     </section>
 
 </div>
+
+{{-- Footer al final del contenido --}}
+@include('layouts.footer')  {{-- si tu carpeta se llama "lyouts", cámbialo a @include('lyouts.footer') --}}
+
 @endsection
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/serviciofooter.css') }}">
+<link rel="stylesheet" href="{{ asset('css/footer.css') }}">
+
 @endpush

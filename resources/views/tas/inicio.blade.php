@@ -7,7 +7,7 @@
 <section class="video-hero-section">
     <div class="video-container">
         <video autoplay muted loop playsinline class="hero-video">
-            <source src="{{ asset('videos/lover.mp4') }}" type="video/mp4">
+            <source src="{{ asset('videos/VideoTAS.mp4') }}" type="video/mp4">
             Tu navegador no soporta el video.
         </video>
         
@@ -100,9 +100,6 @@
 </section>
 
 
-
-
-
 <!-- SECCIÓN: BENEFICIOS DE TAS -->
 <section class="beneficios-section py-3"> <!--"beneficios-section py-3"-->
     <div class="container text-center">
@@ -168,19 +165,6 @@
 </section>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 {{-- SECCIÓN DE FARMACIAS COLABORADORAS --}}
 <div class="container py-5" id="farmacias">
     @php
@@ -230,7 +214,6 @@
 
 {{-- Footer fuera del section para que sea full width --}}
 <!-- Footer -->
-<!--<footer class="text-white pt-5 pb-4" style="background-color:#002a45; width: 100%;"> -->
 <footer class="text-white pt-5 pb-4 footer-fullwidth"> 
     <div class="container">
         <div class="row">
@@ -295,7 +278,6 @@
         <i class="fas fa-arrow-up"></i>
     </a>
 </footer>
-
 
 
 @endsection
