@@ -70,8 +70,29 @@
     </section>
 
 </div>
+
+{{-- Footer al final del contenido --}}
+@include('layouts.footer')  {{-- si tu carpeta se llama "lyouts", cámbialo a @include('lyouts.footer') --}}
+
 @endsection
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/acerca.css') }}">
+<link rel="stylesheet" href="{{ asset('css/footer.css') }}">
+@endpush
+
+@push('scripts')
+<script>
+    // botón del footer para subir
+    const btnScrollTop = document.getElementById('btnScrollTop');
+    if (btnScrollTop) {
+        btnScrollTop.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+</script>
 @endpush

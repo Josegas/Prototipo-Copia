@@ -1,6 +1,5 @@
 {{-- Footer fuera del section para que sea full width --}}
 <!-- Footer -->
-<!--<footer class="text-white pt-5 pb-4" style="background-color:#002a45; width: 100%;"> -->
 <footer class="text-white pt-5 pb-4 footer-fullwidth"> 
     <div class="container">
         <div class="row">
