@@ -1,0 +1,126 @@
+<?php
+
+namespace App\Domain;
+
+use App\Repositories\ConsultarRepository;
+use App\Services\RutaOpenStreetMapService;
+use App\Services\SucursalService;
+use InvalidArgumentException;
+
+class DetalleReceta
+{
+    private Medicamento $medicamento;
+    private int $cantidad;
+    private float $precio;
+    private array $lineasSurtido = [];
+
+    public function __construct(
+        ?Medicamento $medicamento = null,
+        int $cantidad = 0,
+        float $precio = 0.0,
+        array $lineasSurtido = []
+    ){
+        $this->medicamento = $medicamento;
+        $this->cantidad = $cantidad;
+        $this->precio = $precio;
+        $this->setLineasSurtido($lineasSurtido);
+    }
+
+    public function obtenerSubtotal(): float 
+    {
+        return $this->cantidad * $this->precio;
+    }
+
+    public function procesar(Sucursal $sucursal, SucursalService $sucursalService): void{
+        $seAbastece = false;
+        $cantidadRequerida = $this->cantidad;
+        $sucursalActual    = $sucursal;
+        while (!$seAbastece) {
+
+            $cantObtenida = $sucursalActual->verificarDisponibilidad(
+                $cantidadRequerida,
+                $this->medicamento
+            );
+
+            if ($cantObtenida > 0) {
+                $linea = new LineaSurtido(
+                    $sucursalActual,
+                    $this->precio,
+                    $cantObtenida
+                );
+                $this->agregarLineaSurtido($linea);
+                $cantidadRequerida -= $cantObtenida;
+            }
+
+            if ($cantidadRequerida <= 0) {
+                $seAbastece = true;
+                break;
+            }
+
+            $siguienteSucursal = $sucursalService->obtenerSucursalMasCercanaConStock(
+                $sucursalActual,
+                $this->medicamento,
+                $cantidadRequerida
+            );
+
+            if ($siguienteSucursal === null) {
+                $seAbastece = true; // o marcar como incompleto / lanzar excepción
+            } else {
+                $sucursalActual = $siguienteSucursal;
+            }
+        }
+    }
+
+    public function abastecer(): void{
+
+    }
+
+    public function obtenerSucursalCercana(Sucursal $suc): void{
+        
+    }
+
+    public function realizarDevolucion(): void{
+        
+    }
+
+    public function getCantidad(): int
+    {
+        return $this->cantidad;
+    }
+
+    public function getPrecio(): float
+    {
+        return $this->precio;
+    }
+
+    public function getLineasSurtido(): array
+    {
+        return $this->lineasSurtido;
+    }
+
+    public function setCantidad(int $cantidad): void
+    {
+        $this->cantidad = $cantidad;
+    }
+
+    public function setPrecio(float $precio): void
+    {
+        $this->precio = $precio;
+    }
+
+    public function setLineasSurtido(array $lineas): void
+    {
+        foreach ($lineas as $ls) {
+            if (!$ls instanceof LineaSurtido) {
+                throw new InvalidArgumentException("Cada elemento debe ser instancia de LineaSurtido");
+            }
+        }
+
+        $this->lineasSurtido = $lineas;
+    }
+
+    public function agregarLineaSurtido(LineaSurtido $linea): void
+    {
+        $this->lineasSurtido[] = $linea;
+    }
+}

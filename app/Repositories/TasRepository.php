@@ -2,10 +2,10 @@
 
 namespace App\Repositories;
 
-use App\Models\BranchModel;
+use App\Models\SucursalModel;
 use App\Models\TarjetaModel;
 use App\Models\UsuarioModel;
-use App\Services\Usuario;
+use App\Domain\Usuario;
 use Illuminate\Support\Facades\DB;
 
 class TasRepository
@@ -67,6 +67,27 @@ class TasRepository
         }
     }
 
+    public function actualizarTarjeta($idUsuario, $last4, $brand, $fechaExp)
+{
+    try {
+        $tarjeta = TarjetaModel::where('id_usuario', $idUsuario)->first();
+        
+        if (!$tarjeta) {
+            return null;
+        }
+
+        $tarjeta->last4 = $last4;
+        $tarjeta->brand = $brand;
+        $tarjeta->fecha_exp = $fechaExp;
+        $tarjeta->save();
+
+        return $tarjeta;
+    } catch (\Exception $e) {
+        return null;
+    }
+}
+
+
     public function buscarUsuarioPorCorreo(string $correo)
     {
         try {
@@ -97,8 +118,8 @@ class TasRepository
     public function obtenerSucursales()
     {
         try {
-            return BranchModel::with('cadena:id_cadena,nombre')
-                ->select('id_sucursal', 'id_cadena', 'nombre', 'latitud', 'longitud')
+            return SucursalModel::with('cadena:id_cadena,nombre')
+                ->select('id_cadena', 'id_sucursal', 'nombre', 'latitud', 'longitud')
                 ->get();
         } catch (\Exception $e) {
             return null;
