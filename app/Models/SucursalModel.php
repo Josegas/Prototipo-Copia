@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BranchModel extends Model
+class SucursalModel extends Model
 {
     protected $table = 'sucursales';
     protected $primaryKey = 'id_sucursal';
@@ -13,7 +13,7 @@ class BranchModel extends Model
 
     public function cadena()
     {
-        return $this->belongsTo(PharmacyModel::class, 'id_cadena', 'id_cadena');
+        return $this->belongsTo(CadenaModel::class, 'id_cadena', 'id_cadena');
     }
 
     public function medications()

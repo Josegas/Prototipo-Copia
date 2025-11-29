@@ -3,6 +3,10 @@
 namespace App\Services;
 
 use App\Repositories\TasRepository;
+use App\Domain\Usuario;
+use App\Domain\Sucursal;
+use App\Domain\Cadena;
+use App\Domain\Tarjeta;
 use DateTime;
 use Illuminate\Support\Facades\Hash;
 
@@ -26,19 +30,14 @@ class TasService
 
         return new Usuario(
             $usuario->id_usuario,
-            $usuario->correo,
-            $usuario->nip,
             $usuario->nombre,
             $usuario->apellido,
-            (bool) $usuario->sesion_activa,
-            (int) $usuario->intentos_login,
-            $usuario->ultimo_intento ? new DateTime($usuario->ultimo_intento) : null,
-            $usuario->bloqueado_hasta ? new DateTime($usuario->bloqueado_hasta) : null,
-            $usuario->rol
+            $usuario->correo,
+            $usuario->nip
         );
     }
 
-    public function crearUsuario($correo, $nip, $nombre, $apellido)
+    public function crearUsuario($nombre, $apellido, $correo, $nip)
     {
         $usuario = $this->encontrarUsuario($correo);
         if ($usuario) {
@@ -227,7 +226,7 @@ class TasService
 
             $sucursal = new Sucursal(
                 $s->id_sucursal,
-                $s->id_cadena,
+                $cadena,
                 $s->nombre,
                 $s->latitud,
                 $s->longitud,
