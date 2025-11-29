@@ -23,16 +23,16 @@ class Usuario
         string $correo,
         string $nip
     ) {
-        $this->idUsuario = $idUsuario;
-        $this->nombre = $nombre;
-        $this->apellido = $apellido;
-        $this->correo = $correo;
-        $this->nip = $nip;
-        $this->sesionActiva = false;
-        $this->intentosLogin = 0;
-        $this->ultimoIntento = null;
-        $this->bloqueadoHasta = null;
-        $this->rol = '';
+        $this->idUsuario        = $idUsuario;
+        $this->nombre           = $nombre;
+        $this->apellido         = $apellido;
+        $this->correo           = $correo;
+        $this->nip              = $nip;
+        $this->sesionActiva     = false;
+        $this->intentosLogin    = 0;
+        $this->ultimoIntento    = null;
+        $this->bloqueadoHasta   = null;
+        $this->rol              = '';
     }
 
     public function getId(): int

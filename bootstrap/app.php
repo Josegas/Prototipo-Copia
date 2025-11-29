@@ -16,6 +16,8 @@ return Application::configure(basePath: dirname(__DIR__))
          $middleware->alias([
             'verificar.sesion' => VerificarSesionUsuario::class,
             'redirigir.si.autenticado' => RedirigirSiAutenticado::class,
+            'solo.empleado' => \App\Http\Middleware\SoloEmpleado::class, // Nueva cosa tambien
+
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

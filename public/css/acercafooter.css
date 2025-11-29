@@ -9,6 +9,12 @@
     transition: all 0.3s ease;
 }
 
+.acerca-card p,
+.acerca-card ul li {
+    font-size: 1.15rem; /* sube el tamaño */
+    line-height: 1.7;   /* más espacio para que se vea más bonito */
+}
+
 .acerca-card:hover {
     transform: translateY(-3px);
     box-shadow: 0 10px 30px rgba(0,0,0,0.12);

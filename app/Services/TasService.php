@@ -19,66 +19,107 @@ class TasService
         $this->tasRepository = $tasRepository;
     }
 
+    /* ============================================================
+     *  ENCONTRAR USUARIO POR CORREO (mapear dominio correctamente)
+     * ============================================================ */
     public function encontrarUsuario($correo)
     {
         $this->tasRepository->beginTransaction();
 
-        $usuario = $this->tasRepository->buscarUsuarioPorCorreo($correo);
-        if (! $usuario) {
+        $usuarioModel = $this->tasRepository->buscarUsuarioPorCorreo($correo);
+
+        if (!$usuarioModel) {
+            $this->tasRepository->rollbackTransaction();
             return null;
         }
 
-        return new Usuario(
-            $usuario->id_usuario,
-            $usuario->nombre,
-            $usuario->apellido,
-            $usuario->correo,
-            $usuario->nip
+        // Crear dominio con los 5 datos del constructor
+        $usuario = new Usuario(
+            $usuarioModel->id_usuario,
+            $usuarioModel->nombre,
+            $usuarioModel->apellido,
+            $usuarioModel->correo,
+            $usuarioModel->nip
         );
+
+        // Setters para completar resto de atributos
+        $usuario->setSesionActiva((bool) $usuarioModel->sesion_activa);
+        $usuario->setIntentosLogin((int) $usuarioModel->intentos_login);
+
+        $usuario->setUltimoIntento(
+            $usuarioModel->ultimo_intento
+                ? new DateTime($usuarioModel->ultimo_intento)
+                : null
+        );
+
+        $usuario->setBloqueadoHasta(
+            $usuarioModel->bloqueado_hasta
+                ? new DateTime($usuarioModel->bloqueado_hasta)
+                : null
+        );
+
+        $usuario->setRol($usuarioModel->rol ?? '');
+
+        return $usuario;
     }
 
-    public function crearUsuario($nombre, $apellido, $correo, $nip)
+    /* ============================================================
+     *  CREAR NUEVO USUARIO
+     * ============================================================ */
+    public function crearUsuario($correo, $nip, $nombre, $apellido)
     {
-        $usuario = $this->encontrarUsuario($correo);
-        if ($usuario) {
-            $this->tasRepository->rollbackTransaction();
-
+        $usuarioExistente = $this->encontrarUsuario($correo);
+        if ($usuarioExistente) {
             return 'Advertencia: El correo ya se encuentra registrado';
         }
 
         $nipHash = Hash::make($nip);
 
         $usuarioNuevo = $this->tasRepository->crearUsuario($correo, $nipHash, $nombre, $apellido);
-        if (! $usuarioNuevo) {
-            $this->tasRepository->rollbackTransaction();
 
+        if (!$usuarioNuevo) {
             return 'Advertencia: No se ha podido crear el usuario';
         }
 
-        $this->tasRepository->commitTransaction();
-
-        return new Usuario(
+        // Crear dominio igual que encontrarUsuario
+        $usuario = new Usuario(
             $usuarioNuevo->id_usuario,
-            $usuarioNuevo->correo,
-            $usuarioNuevo->nip,
             $usuarioNuevo->nombre,
             $usuarioNuevo->apellido,
-            (bool) $usuarioNuevo->sesion_activa,
-            (int) $usuarioNuevo->intentos_login,
-            $usuarioNuevo->ultimo_intento ? new \DateTime($usuarioNuevo->ultimo_intento) : null,
-            $usuarioNuevo->bloqueado_hasta ? new \DateTime($usuarioNuevo->bloqueado_hasta) : null,
-            $usuarioNuevo->rol
+            $usuarioNuevo->correo,
+            $usuarioNuevo->nip
         );
+
+        // Aplicar setters
+        $usuario->setSesionActiva((bool) $usuarioNuevo->sesion_activa);
+        $usuario->setIntentosLogin((int) $usuarioNuevo->intentos_login);
+
+        $usuario->setUltimoIntento(
+            $usuarioNuevo->ultimo_intento
+                ? new DateTime($usuarioNuevo->ultimo_intento)
+                : null
+        );
+
+        $usuario->setBloqueadoHasta(
+            $usuarioNuevo->bloqueado_hasta
+                ? new DateTime($usuarioNuevo->bloqueado_hasta)
+                : null
+        );
+
+        $usuario->setRol($usuarioNuevo->rol ?? '');
+
+        return $usuario;
     }
 
+    /* ============================================================
+     *  CREAR TARJETA
+     * ============================================================ */
     public function crearTarjeta(int $idUsuario, string $numero, string $fechaExp)
     {
         $this->tasRepository->beginTransaction();
 
         $numeroLimpio = preg_replace('/\D/', '', $numero);
-
         $last4 = substr($numeroLimpio, -4);
-
         $brand = $this->detectarBrand($numeroLimpio);
 
         $tarjetaModel = $this->tasRepository->crearTarjeta(
@@ -88,9 +129,8 @@ class TasService
             $fechaExp
         );
 
-        if (! $tarjetaModel) {
+        if (!$tarjetaModel) {
             $this->tasRepository->rollbackTransaction();
-
             return 'Advertencia: No se pudo registrar la tarjeta.';
         }
 
@@ -109,7 +149,7 @@ class TasService
     {
         $resultado = $this->tasRepository->obtenerTarjetaPorUsuario($idUsuario);
 
-        if (! $resultado) {
+        if (!$resultado) {
             return null;
         }
 
@@ -133,71 +173,92 @@ class TasService
         if (preg_match('/^3[47]/', $num)) {
             return 'amex';
         }
-
         return 'desconocido';
     }
 
+    /* ============================================================
+     *  ACTUALIZAR ESTADO DEL USUARIO
+     * ============================================================ */
     public function actualizarSesion(Usuario $usuario)
     {
         $this->tasRepository->actualizarStatusUsuario($usuario);
         $this->tasRepository->commitTransaction();
     }
 
+    /* ============================================================
+     *  INICIAR SESIÓN
+     * ============================================================ */
     public function iniciarSesion(string $correo, string $nip)
     {
         $usuario = $this->encontrarUsuario($correo);
-        if (! $usuario) {
+
+        if (!$usuario) {
             return 'Correo o contraseña incorrectos.';
         }
 
-        $fechaActual = new DateTime;
+        // Validar bloqueos
+        $fechaActual = new DateTime();
         $usuario->setUltimoIntento($fechaActual);
-        $bloqueadoHasta = $usuario->getBloqueadoHasta();
 
-        if ($bloqueadoHasta && $bloqueadoHasta > $usuario->getUltimoIntento()) {
+        if ($usuario->getBloqueadoHasta() && $usuario->getBloqueadoHasta() > $fechaActual) {
             $this->actualizarSesion($usuario);
-            $fecha = $usuario->getBloqueadoHasta()->format('Y-m-d H:i:s');
 
-            return 'Advertencia: Esta cuenta ha sido bloqueada hasta '.$fecha;
+            return 'Advertencia: Esta cuenta ha sido bloqueada hasta ' .
+                $usuario->getBloqueadoHasta()->format('Y-m-d H:i:s');
         }
 
-        if (! Hash::check($nip, $usuario->getNip())) {
+        // Verificar contraseña
+        if (!Hash::check($nip, $usuario->getNip())) {
 
             $usuario->aumentarIntentosLogin();
 
             if ($usuario->getIntentosLogin() > 3) {
-                $ultimoIntento = $usuario->getUltimoIntento();
-                $nuevoBloqueo = (clone $ultimoIntento)->modify('+30 minutes');
+                $nuevoBloqueo = (clone $fechaActual)->modify('+30 minutes');
                 $usuario->setBloqueadoHasta($nuevoBloqueo);
                 $usuario->reiniciarIntentosLogin();
-                $this->actualizarSesion($usuario);
-                $fecha = $usuario->getBloqueadoHasta()->format('Y-m-d H:i:s');
 
-                return 'Advertencia: Esta cuenta ha sido bloqueada hasta '.$fecha;
+                $this->actualizarSesion($usuario);
+
+                return 'Advertencia: Esta cuenta ha sido bloqueada hasta ' .
+                    $usuario->getBloqueadoHasta()->format('Y-m-d H:i:s');
             }
 
             $this->actualizarSesion($usuario);
-
             return 'Correo o contraseña incorrectos.';
         }
 
+        // Verificar sesión activa
         if ($usuario->isSesionActiva()) {
-            $this->tasRepository->rollbackTransaction();
-
             return 'Advertencia: Ya hay una sesión activa para esta cuenta';
         }
 
+        // Activar sesión
         $usuario->iniciarSesion();
         $usuario->reiniciarIntentosLogin();
         $this->actualizarSesion($usuario);
 
+        // Guardar en sesión
+        session([
+            'usuario' => [
+                'id'       => $usuario->getId(),
+                'correo'   => $usuario->getCorreo(),
+                'nombre'   => $usuario->getNombre(),
+                'apellido' => $usuario->getApellido(),
+                'rol'      => $usuario->getRol(),
+            ]
+        ]);
+
         return $usuario;
     }
 
+    /* ============================================================
+     *  CERRAR SESIÓN
+     * ============================================================ */
     public function cerrarSesion($correo)
     {
         $usuario = $this->encontrarUsuario($correo);
-        if (! $usuario) {
+
+        if (!$usuario) {
             return null;
         }
 
@@ -205,23 +266,22 @@ class TasService
         $this->actualizarSesion($usuario);
     }
 
+    /* ============================================================
+     *  OBTENER SUCURSALES (NO LO TOQUÉ)
+     * ============================================================ */
     public function obtenerSucursales()
     {
         $modelos = $this->tasRepository->obtenerSucursales();
 
-        if (! $modelos) {
+        if (!$modelos) {
             return [];
         }
 
         $sucursales = [];
 
         foreach ($modelos as $s) {
-
             $cadena = $s->cadena
-                ? new Cadena(
-                    $s->cadena->id_cadena,
-                    $s->cadena->nombre
-                )
+                ? new Cadena($s->cadena->id_cadena, $s->cadena->nombre)
                 : null;
 
             $sucursal = new Sucursal(
