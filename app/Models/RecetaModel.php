@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PrescriptionModel extends Model
+class RecetaModel extends Model
 {
     protected $table = 'recetas';
     protected $primaryKey = 'id_receta';
@@ -22,5 +22,14 @@ class PrescriptionModel extends Model
     public function medications()
     {
         return $this->hasMany(PrescriptionMedicationModel::class, 'id_receta', 'id_receta');
+    }
+    public function usuario()
+    {
+        return $this->belongsTo(UsuarioModel::class, 'id_usuario', 'id_usuario');
+    }
+
+    public function sucursalDestino()
+    {
+        return $this->belongsTo(SucursalModel::class, 'id_sucursalDestino', 'id_sucursal');
     }
 }

@@ -14,4 +14,9 @@ class PuestoModel extends Model
         'nombre',
         'descripcion'
     ];
+
+    public function usuario()
+    {
+        return $this->hasMany(EmpleadoModel::class, 'id_puesto', 'id_puesto');
+    }
 }

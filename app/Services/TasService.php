@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Hash;
 class TasService
 {
     private $tasRepository;
-
     public function __construct(TasRepository $tasRepository)
     {
         $this->tasRepository = $tasRepository;
@@ -237,16 +236,29 @@ class TasService
         $usuario->reiniciarIntentosLogin();
         $this->actualizarSesion($usuario);
 
-        // Guardar en sesión
-        session([
-            'usuario' => [
-                'id'       => $usuario->getId(),
-                'correo'   => $usuario->getCorreo(),
-                'nombre'   => $usuario->getNombre(),
-                'apellido' => $usuario->getApellido(),
-                'rol'      => $usuario->getRol(),
-            ]
-        ]);
+        // ----------------------------------
+        // Construimos los datos de sesión
+        // ----------------------------------
+        $sessionData = [
+            'id'       => $usuario->getId(),
+            'correo'   => $usuario->getCorreo(),
+            'nombre'   => $usuario->getNombre(),
+            'apellido' => $usuario->getApellido(),
+            'rol'      => $usuario->getRol(),
+        ];
+
+        if ($usuario->getRol() === 'empleado') {
+            $empleado = $this->tasRepository->obtenerEmpleado($usuario);
+            if ($empleado) {
+                $sessionData['id_sucursal'] = $empleado->getSucursal()->getIdSucursal();
+                $sessionData['id_cadena']=$empleado->getSucursal()->getCadena()->getIdCadena();
+                $sessionData['nombre_sucursal']=$empleado->getSucursal()->getNombre();
+                $sessionData['nombre_cadena']=$empleado->getSucursal()->getCadena()->getNombre();
+                $sessionData['id_puesto']   = $empleado->getPuesto();
+            }
+        }
+
+        session(['usuario' => $sessionData]);
 
         return $usuario;
     }
@@ -298,4 +310,10 @@ class TasService
 
         return $sucursales;
     }
+
+
 }
+
+
+
+

@@ -312,4 +312,5 @@ class ConsultarRepository
 
         return $resultado;
     }
+
 }

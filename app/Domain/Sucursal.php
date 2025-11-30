@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Domain;
-use App\repositories\ConsultarRepository;
+use App\Repositories\ConsultarRepository;
+use App\Repositories\ActualizarRepository;
 class Sucursal
 {
     private int $idSucursal;

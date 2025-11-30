@@ -7,27 +7,9 @@
     <h1 class="mb-4" style="color:#003865;">Recetas expiradas</h1>
 
     <p class="text-muted mb-4">
-        Estas recetas excedieron el tiempo límite de recolección (por ejemplo, 72 horas) y fueron marcadas como expiradas.
+        Estas recetas excedieron el tiempo límite de recolección y fueron marcadas como expiradas.
     </p>
 
-    {{-- Filtro por rango de fechas --}}
-    <div class="card mb-4">
-        <div class="card-body">
-            <form class="row g-3">
-                <div class="col-md-4">
-                    <label class="form-label">Fecha recolección (hasta)</label>
-                    <input type="date" class="form-control">
-                </div>
-                <div class="col-md-4 d-flex align-items-end">
-                    <button type="button" class="btn btn-primary w-100">
-                        Filtrar
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    {{-- Tabla de recetas expiradas --}}
     <div class="card">
         <div class="card-body">
             <h5 class="card-title mb-3">Listado de recetas expiradas</h5>
@@ -41,28 +23,44 @@
                             <th>Fecha registro</th>
                             <th>Fecha recolección</th>
                             <th>Días de atraso</th>
-                            <th>Motivo / Nota</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
+
                     <tbody>
+                        @forelse($recetas as $receta)
                         <tr>
-                            <td>R-0005</td>
-                            <td>Carlos Ruiz</td>
-                            <td>2025-10-20</td>
-                            <td>2025-10-22</td>
-                            <td>5 días</td>
-                            <td>No acudió a recoger en el tiempo establecido.</td>
+                            <td>{{ $receta->folio }}</td>
+                            <td>{{ $receta->paciente_nombre }}</td>
+                            <td>{{ date('Y-m-d', strtotime($receta->fecha_registro)) }}</td>
+                            <td>{{ date('Y-m-d', strtotime($receta->fecha_recoleccion)) }}</td>
+                            <td>{{ $receta->dias_atraso }} días</td>
+
+                            <td>
+                                <span class="badge bg-danger">Expirada</span>
+                            </td>
+
+                            <td>
+                                <a href="{{ route('empleado.detalleReceta', $receta->id) }}" 
+                                   class="btn btn-sm btn-outline-primary">
+                                    Ver detalles
+                                </a>
+
+                                <button class="btn btn-sm btn-outline-warning ms-1">
+                                    Marcar devolución completada
+                                </button>
+                            </td>
                         </tr>
+                        @empty
                         <tr>
-                            <td>R-0008</td>
-                            <td>Ana Torres</td>
-                            <td>2025-10-18</td>
-                            <td>2025-10-21</td>
-                            <td>7 días</td>
-                            <td>Requiere seguimiento para devolución al inventario.</td>
+                            <td colspan="7" class="text-center text-muted">
+                                No hay recetas expiradas.
+                            </td>
                         </tr>
-                        {{-- Luego aquí harás @foreach con datos reales --}}
+                        @endforelse
                     </tbody>
+
                 </table>
             </div>
         </div>

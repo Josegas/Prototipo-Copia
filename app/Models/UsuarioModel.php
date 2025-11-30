@@ -19,7 +19,18 @@ class UsuarioModel extends Model
         'bloqueado_hasta',
         'rol'
     ];
+
+    /*public function empleado()
+    {
+        return $this->hasOne(EmpleadoModel::class, 'id_usuario', 'id_usuario')
+            ->with(['puesto']);
+    }*/
+
     protected $hidden = ['nip'];
 
     public $timestamps = false;
+    public function recetas()
+    {
+        return $this->hasMany(RecetaModel::class, 'id_receta', 'id_receta');
+    }
 }

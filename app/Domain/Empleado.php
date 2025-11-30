@@ -3,22 +3,24 @@
 namespace App\Domain;
 
 class Empleado extends Usuario{
-    private string $puesto;
-
+    private Puesto $puesto;
+    private ?Sucursal $sucursal;
     public function __construct(
         int $idUsuario,
         string $nombre,
         string $apellido,
         string $correo,
         string $nip,
-        string $puesto
+        Puesto $puesto,
+        ?Sucursal $sucursal = null
     ){
         parent::__construct($idUsuario, $nombre, $apellido, $correo, $nip);
         $this->puesto = $puesto;
-        $this->setRol('Empleado');
+        $this->sucursal = $sucursal;
+        $this->setRol('empleado');
     }
 
-    public function getPuesto(): string
+    public function getPuesto(): Puesto
     {
         return $this->puesto;
     }
@@ -31,4 +33,14 @@ class Empleado extends Usuario{
     public function notificarReceta(): void{
         
     }
+    public function getSucursal(): ?Sucursal
+    {
+        return $this->sucursal;
+    }
+
+    public function setSucursal(?Sucursal $sucursal): void
+    {
+        $this->sucursal = $sucursal;
+    }
+    
 }

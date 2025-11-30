@@ -3,9 +3,16 @@
 namespace App\Repositories;
 
 use App\Models\SucursalModel;
+use App\Models\CadenaModel;
 use App\Models\TarjetaModel;
 use App\Models\UsuarioModel;
+use App\Models\EmpleadoModel;
+use App\Models\PuestoModel;
 use App\Domain\Usuario;
+use App\Domain\Empleado;
+use App\Domain\Sucursal;
+use App\Domain\Cadena;
+use App\Domain\Puesto;
 use Illuminate\Support\Facades\DB;
 
 class TasRepository
@@ -98,12 +105,23 @@ class TasRepository
             return null;
         }
     }
+    /*public function buscarUsuarioPorCorreo(string $correo)
+    {
+        try {
+            return UsuarioModel::where('correo', $correo)
+                ->with(['empleado.puesto'])
+                ->lockForUpdate()
+                ->first();
+        } catch (\Exception $e) {
+            return null;
+        }
+    }*/
+
 
     public function actualizarStatusUsuario(Usuario $usuario)
     {
         try {
             $usuarioModel = UsuarioModel::find($usuario->getId());
-
             $usuarioModel->sesion_activa = $usuario->isSesionActiva();
             $usuarioModel->intentos_login = $usuario->getIntentosLogin();
             $usuarioModel->ultimo_intento = $usuario->getUltimoIntento()?->format('Y-m-d H:i:s');
@@ -125,4 +143,117 @@ class TasRepository
             return null;
         }
     }
+
+    
+    //EMPLEADO
+    public function obtenerEmpleado(Usuario $usuario): ?Empleado
+    {
+        try {
+            // Traemos también el puesto (relación en EmpleadoModel)
+            $empleadoModel = EmpleadoModel::with('puesto')
+                ->where('id_usuario', $usuario->getId())
+                ->first();
+
+            if (!$empleadoModel) {
+                dd("no encontre nada");
+                return null;
+            }
+
+            // Construimos el dominio Empleado a partir del Usuario + puesto
+            $empleado = new Empleado(
+                $usuario->getId(),
+                $usuario->getNombre(),
+                $usuario->getApellido(),
+                $usuario->getCorreo(),
+                $usuario->getNip(),
+                $this->obtenerPuesto($empleadoModel->id_puesto),
+                $this->obtenerSucursal($empleadoModel->id_sucursal)
+            );
+
+            // Copiamos el estado de sesión & bloqueo desde el Usuario
+            $empleado->setSesionActiva($usuario->isSesionActiva());
+            $empleado->setIntentosLogin($usuario->getIntentosLogin());
+            $empleado->setUltimoIntento($usuario->getUltimoIntento());
+            $empleado->setBloqueadoHasta($usuario->getBloqueadoHasta());
+            $empleado->setRol($usuario->getRol());
+
+            return $empleado;
+
+            }catch (\Exception $e) {
+                return null;
+            }
+    }
+
+    private function obtenerSucursal(int $idSucursal) {
+        $sucursalEloquent = SucursalModel::with('cadena')->find($idSucursal);
+
+        if (!$sucursalEloquent) {
+            return null;
+        }
+
+        $sucursalDomain = new Sucursal(
+            $sucursalEloquent->id_sucursal,
+            $this->obtenerCadena($sucursalEloquent->id_cadena),
+            $sucursalEloquent->nombre,
+            $sucursalEloquent->latitud,
+            $sucursalEloquent->longitud,
+        );
+
+        return $sucursalDomain;
+    }
+
+    private function obtenerCadena(string $idCadena){
+        $cadenaEloquent = CadenaModel::find($idCadena);
+
+        if (!$cadenaEloquent) {
+            return null;
+        }
+        $cadenaDomain = new Cadena(
+            $cadenaEloquent->id_cadena,
+            $cadenaEloquent->nombre
+        );
+
+        return $cadenaDomain;
+    }
+
+    private function obtenerPuesto(string $idPuesto){
+        $puestoEloquent = PuestoModel::find($idPuesto);
+
+        if (!$puestoEloquent) {
+            return null;
+        }
+        $puestoDomain = new Puesto(
+            $puestoEloquent->id_puesto,
+            $puestoEloquent->nombre,
+            $puestoEloquent->descripcion
+        );
+
+        return $puestoDomain;
+    }
+
+
+
+
+    /*public function obtenerRecetasPendientes()
+    {
+        $models = RecetaModel::with(['usuario','sucursal'])
+            ->where('estado_pedido', 'PENDIENTE')
+            ->orderBy('fecha_registro', 'asc')
+            ->get();
+
+        return $models->map(fn($m) => $this->transformarRecetaModelADomain($m));
+    }
+
+    public function obtenerRecetasExpiradas()
+    {
+        $models = RecetaModel::with(['usuario','sucursal'])
+            ->where('estado_pedido', 'EXPIRADA')
+            ->orderBy('fecha_recoleccion', 'asc')
+            ->get();
+
+        return $models->map(fn($m) => $this->transformarRecetaModelADomain($m));
+    }*/
+
 }
+
+
