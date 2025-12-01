@@ -162,7 +162,7 @@ class Receta
         // lógica de dominio pendiente
     }
 
-        private function ajustarAHorarioLaboral(DateTime $fecha, int $horaInicio = 9, int $horaFin = 20): DateTime
+    private function ajustarAHorarioLaboral(DateTime $fecha, int $horaInicio = 9, int $horaFin = 20): DateTime
     {
                     /**
          * Ajusta una fecha al horario laboral:
@@ -194,12 +194,16 @@ class Receta
 
     public function devolverMedicamentos(): void
     {
-        // lógica de dominio pendiente
+        $this->cambiarEstado("devolviendo"); //dar persistencia a receta
+        foreach ($this->detallesReceta as $detalle) {
+            $detalle->realizarDevolucion();
+            //persistencia al detalle individual
+        }
     }
 
     public function cambiarEstado(string $estado): void
     {
-        // lógica de dominio pendiente
+        $this->estadoPedido = $estado;
     }
 
     public function agregarDetalleReceta($detalle){

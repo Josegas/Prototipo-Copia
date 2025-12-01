@@ -37,24 +37,36 @@ class Sucursal
         $hayStock = $inv->verificarStock();
         $stockExistente = 0;
         $cantObtenida = 0;
-
+        $cadena = $this->getCadena();
+        $actualizarRepository = new ActualizarRepository();
+        $actualizarRepository->beginTransaction();
         if ($hayStock) {
             $stockExistente = $inv->obtenerStock();
-
             if ($stockExistente >= $cant) {
                 $inv->descontarMedicamento($cant);
-                $cantObtenida = $cant;
+                $cantObtenida = $cant;     
             } else {
                 $inv->descontarMedicamento($stockExistente);
                 $cantObtenida = $stockExistente;
             }
+            $idSucursal = $this->getIdSucursal();
+            $actualizarRepository->actualizarInventario($cadena, $idSucursal, $inv);
         }
-
+        $actualizarRepository->commitTransaction();
         return $cantObtenida;
     }
 
-    public function devolverReceta(int $idReceta): void{
+    public function devolverReceta(int $idReceta): void
+    {
+        $consultarRepository = new ConsultarRepository();
+        $actualizarRepository = new ActualizarRepository();
 
+        $receta = $consultarRepository->recuperarReceta($idReceta);
+
+        $receta->devolverMedicamentos(); // tu dominio actualiza estado
+
+        // 🔹 Ahora solo persistimos la receta completa:
+        $actualizarRepository->guardarReceta($receta);
     }
 
     public function confirmarRecetaNoRecogida(int $idReceta, string $estado): void{
